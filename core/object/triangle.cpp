@@ -42,16 +42,19 @@ Triangle Triangle::projectTo2D(Vec3 eye, double d)
 
     Vec3 pva, pvb, pvc;
 
-    pva.x = vva.x * d / vva.z;
-    pva.y = vva.y * d / vva.z;
+    double f = d / vva.z;
+    pva.x = vva.x * f;
+    pva.y = vva.y * f;
     pva.z = d;
 
-    pvb.x = vvb.x * d / vvb.z;
-    pvb.y = vvb.y * d / vvb.z;
+    f = d / vvb.z;
+    pvb.x = vvb.x * f;
+    pvb.y = vvb.y * f;
     pvb.z = d;
 
-    pvc.x = vvc.x * d / vvc.z;
-    pvc.y = vvc.y * d / vvc.z;
+    f = d / vvc.z;
+    pvc.x = vvc.x * f;
+    pvc.y = vvc.y * f;
     pvc.z = d;
 
     return  Triangle(pva, pvb, pvc, color_fill);

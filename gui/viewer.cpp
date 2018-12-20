@@ -1,6 +1,6 @@
 #include "viewer.h"
 #include <QDebug>
-#include "parser/objfileparser.h"
+#include "../core/parser/objfileparser.h"
 
 unsigned int Viewer::m_time = 0;
 Viewer::Viewer(QWidget *parent) : QWidget(parent)
@@ -15,6 +15,7 @@ Viewer::Viewer(QWidget *parent) : QWidget(parent)
     m_image = new QImage(W,H,QImage::Format_RGB32);
     m_scene = new Scene();
 
+    m_scene->m_mesh.makeCube(); //画立方体
 
 
     renderImg(W/2,H/2);
@@ -25,12 +26,14 @@ void Viewer::renderImg(int x, int y)
 {
     temp_timer.restart();
 
+    m_scene->update((double)x/W, (double)y/H);
+
 #pragma omp parallel for
     //遍历像素点
     for(int i = 0; i < H; ++i){
         for(int j = 0; j < W; ++j){
             //获取颜色
-            Color color = case066((double)j/W, (double)i/H, (double)x/W, (double)y/H, m_scene);
+            Color color = caseCube((double)j/W, (double)i/H, m_scene);
             //设置颜色
             m_image->setPixel(j,i,QColor::fromRgb((int)color.r, (int)color.g, (int)color.b).rgb());
         }
@@ -38,7 +41,7 @@ void Viewer::renderImg(int x, int y)
     update();
     //    m_time++;
 
-//    qDebug()<< temp_timer.elapsed();
+    qDebug()<< temp_timer.elapsed();
 }
 
 void Viewer::mouseMoveEvent(QMouseEvent *ev)
@@ -46,7 +49,6 @@ void Viewer::mouseMoveEvent(QMouseEvent *ev)
     mouse_posX = ev->x();
     mouse_posY = ev->y();
 
-    //qDebug()<< "mx:" <<mouse_posX << "my:" <<mouse_posY;
     renderImg(mouse_posX, mouse_posY);
 }
 
@@ -64,14 +66,11 @@ void Viewer::dragEnterEvent(QDragEnterEvent *ev)
         ev->acceptProposedAction();
     else
         ev->ignore();
-
-
 }
 
 void Viewer::dropEvent(QDropEvent *ev)
 {
     QString path = ev->mimeData()->urls()[0].toLocalFile();//.toLocalFile()是获取拖动文件的本地路径。
-
     ObjFileParser::setFilePath(path.toStdString());
     ObjFileParser::parse(m_scene->m_mesh);
 }

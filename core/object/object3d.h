@@ -2,8 +2,8 @@
 #define OBJECT_H
 
 #include <math.h>
-#include "color.h"
-#include "vec.h"
+#include "../color.h"
+#include "../vec.h"
 
 #define PI 3.1415926
 

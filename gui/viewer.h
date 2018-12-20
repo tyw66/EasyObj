@@ -7,8 +7,8 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "case.h"
-#include "scene.h"
+#include "../core/case.h"
+#include "../core/scene.h"
 
 
 

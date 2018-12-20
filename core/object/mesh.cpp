@@ -18,17 +18,31 @@ void Mesh::rotate(double xAngle, double yAngle, double zAngle)
     }
 }
 
-
-Color Mesh::sample(double x, double y, const Vec3 &eye, double d)
+void Mesh::project(const Vec3 &eye, double d)
 {
-    Color c;
+    m_buffer.clear();
+    //遍历三角形  投影三角形到平面
+    for(size_t i = 0; i < m_data.size(); ++i){
+        m_buffer.push_back(m_data[i].projectTo2D(eye,d));
+    }
+}
+
+
+Color Mesh::sample(double x, double y)
+{
+    //背景色
+    Color c(64,64,64);
+
+    //目前离摄像机最近的面：无穷远
     double index = 10e9;
-    for(int i = 0; i < m_data.size(); ++i){
-        Triangle projTr = m_data[i].projectTo2D(eye,d);
-        if(projTr.isContain(x,y)){
-            if(projTr.z_index < index){
-                c = projTr.color_fill;
-                index = projTr.z_index;
+    //遍历三角形
+    for(size_t i = 0; i < m_buffer.size(); ++i){
+        //如果这个面包含了这个像素
+        if(m_buffer[i].isContain(x,y)){
+            //找出在此像素上，离摄像机最近的面
+            if(m_buffer[i].z_index < index){
+                c = m_buffer[i].color_fill;
+                index = m_buffer[i].z_index;
             }
         }
     }

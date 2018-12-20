@@ -17,8 +17,13 @@ public:
 
     std::vector<Object3D*>  m_objs;/**< 场景包含的物体*/
 
-
     Mesh m_mesh;
+    /**
+     * @brief update
+     * @param x
+     * @param y
+     */
+    void update(double x, double y);
 
 
 };

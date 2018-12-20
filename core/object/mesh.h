@@ -52,7 +52,14 @@ public:
      * @param d 投影平面坐标
      * @return
      */
-    Color sample(double x, double y, const Vec3 &eye, double d);
+    Color sample(double x, double y);
+    /**
+     * @brief project
+     * @param eye 摄像机位置
+     * @param d 投影平面坐标
+     */
+    void project(const Vec3 &eye, double d);
+
 
     /**
      * @brief 方便函数，生成一个立方体
@@ -69,6 +76,7 @@ private:
 
     std::vector<Triangle> m_buffer; /**< 缓存*/
 
+//    Triangle m_projTr;
 };
 
 #endif // MESH_H
