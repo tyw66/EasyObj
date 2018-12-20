@@ -5,7 +5,6 @@
 #include "../color.h"
 #include "../vec.h"
 
-#define PI 3.1415926
 
 /**
  * @brief 所有3D几何体的基类

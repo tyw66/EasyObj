@@ -8,6 +8,7 @@
 
 
 #include<math.h>
+
 class Vec3{
 public:
     float x,y,z;

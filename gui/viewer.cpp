@@ -6,7 +6,7 @@ unsigned int Viewer::m_time = 0;
 Viewer::Viewer(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(Qt::WindowCloseButtonHint);
-    //    setAttribute(Qt::WA_DeleteOnClose);
+//        setAttribute(Qt::WA_DeleteOnClose);
     setMinimumSize(W,H);
     setMaximumSize(W,H);
     setMouseTracking(true);
@@ -33,7 +33,7 @@ void Viewer::renderImg(int x, int y)
     for(int i = 0; i < H; ++i){
         for(int j = 0; j < W; ++j){
             //获取颜色
-            Color color = caseCube((double)j/W, (double)i/H, m_scene);
+            Color color = sample((double)j/W, (double)i/H, m_scene);
             //设置颜色
             m_image->setPixel(j,i,QColor::fromRgb((int)color.r, (int)color.g, (int)color.b).rgb());
         }
@@ -41,7 +41,7 @@ void Viewer::renderImg(int x, int y)
     update();
     //    m_time++;
 
-    qDebug()<< temp_timer.elapsed();
+//    qDebug()<< temp_timer.elapsed();
 }
 
 void Viewer::mouseMoveEvent(QMouseEvent *ev)
