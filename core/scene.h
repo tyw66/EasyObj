@@ -18,14 +18,11 @@ public:
     std::vector<Object3D*>  m_objs;/**< 场景包含的物体*/
 
     Mesh m_mesh;
-    /**
-     * @brief update
-     * @param x
-     * @param y
-     */
-    void update(double x, double y, double x0, double y0);
+
+    void update(double x, double y, double x0, double y0, double whl_delta);
 
 
+    double m_projD;//投影面 坐标
 };
 
 #endif // SCENE_H

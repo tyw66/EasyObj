@@ -21,16 +21,22 @@ Viewer::Viewer(QWidget *parent) : QWidget(parent)
     m_scene->m_mesh.makeCube(); //程序加载时画立方体
 
 
-    renderImg(W/2,H/2,W/2,H/2);
+    mouse_posX = 0;
+    mouse_posY = 0;
+    mouse_curX = 0;
+    mouse_curY = 0;
+    wheel_delta = 0;
+
+    renderImg(W/2,H/2,W/2,H/2,0);
 
 }
 
-void Viewer::renderImg(int x, int y, int x0, int y0)
+void Viewer::renderImg(int x, int y, int x0, int y0, double whl_del)
 {
     fps_timer.restart();
 
     //模型变换
-    m_scene->update((double)x/W, (double)y/H ,(double)x0/W, (double)y0/H);
+    m_scene->update((double)x/W, (double)y/H ,(double)x0/W, (double)y0/H, whl_del);
 
     //#pragma omp parallel for
     for(int i = 0; i < H; ++i){    //遍历像素点
@@ -69,6 +75,7 @@ void Viewer::dropEvent(QDropEvent *ev)
     QString path = ev->mimeData()->urls()[0].toLocalFile();//.toLocalFile()是获取拖动文件的本地路径。
     ObjFileParser::setFilePath(path.toStdString());
     ObjFileParser::parse(m_scene->m_mesh);
+    renderImg(mouse_curX, mouse_curY,mouse_posX, mouse_posY, wheel_delta);
 }
 
 
@@ -78,7 +85,7 @@ void Viewer::mouseMoveEvent(QMouseEvent *ev)
     if(m_status == ROTATE){
         mouse_curX = ev->x();
         mouse_curY = ev->y();
-        renderImg(mouse_curX, mouse_curY,mouse_posX, mouse_posY);
+        renderImg(mouse_curX, mouse_curY,mouse_posX, mouse_posY, wheel_delta);
         mouse_posX = ev->x();
         mouse_posY = ev->y();
     }
@@ -94,6 +101,13 @@ void Viewer::mousePressEvent(QMouseEvent *ev)
 void Viewer::mouseReleaseEvent(QMouseEvent *ev)
 {
     m_status = FREE;
+}
+
+void Viewer::wheelEvent(QWheelEvent *ev)
+{
+    wheel_delta = ev->delta() / 10;
+    renderImg(mouse_curX, mouse_curY,mouse_posX, mouse_posY, wheel_delta);
+    wheel_delta = 0;
 }
 
 

@@ -45,14 +45,14 @@ bool ObjFileParser::parse(Mesh &mesh)
 
         //! 顶点
         if(flag == "v") {
-            std::cout << "read vertex..." <<std::endl;
+//            std::cout << "read vertex..." <<std::endl;
             Vec3 v;
             ss >> v.x >> v.y >> v.z;
             vList.push_back(v);
         }
         //! 法线
         else if(flag == "vn") {
-            std::cout << "read normal..." <<std::endl;
+//            std::cout << "read normal..." <<std::endl;
             Vec3 vn;
             ss >> vn.x >> vn.y >> vn.z;
             vnList.push_back(vn);
@@ -60,14 +60,14 @@ bool ObjFileParser::parse(Mesh &mesh)
         }
         //! 纹理坐标
         else if(flag == "vt") {
-            std::cout << "read texture coord..." <<std::endl;
+//            std::cout << "read texture coord..." <<std::endl;
             Vec3 vt;
             ss >> vt.x >> vt.y >> vt.z;
             vtList.push_back(vt);
         }
         //! 面
         else if(flag == "f") {
-            std::cout << "read face..." <<std::endl;
+//            std::cout << "read face..." <<std::endl;
             char s1[20],s2[20],s3[20];
             ss >> s1 >>s2 >> s3;
 

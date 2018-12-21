@@ -4,9 +4,10 @@
 
 Scene::Scene()
 {
+    m_projD = 90;
 }
 
-void Scene::update(double x, double y, double x0, double y0)
+void Scene::update(double x, double y, double x0, double y0, double whl_delta)
 {
     //! 鼠标位置坐标变换
     double xMouse, yMouse;
@@ -20,7 +21,9 @@ void Scene::update(double x, double y, double x0, double y0)
 
 
     ///投影变换
-    double d = 90;//投影面 坐标
-    Vec3 eye(0,0,100);
-    m_mesh.project(eye,d);
+    m_projD += whl_delta;
+    if(m_projD < 0) m_projD = 0; //注释掉这一句会有神奇效果
+
+    Vec3 eye(0,0,80);
+    m_mesh.project(eye,m_projD);
 }

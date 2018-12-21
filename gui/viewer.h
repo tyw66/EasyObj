@@ -41,8 +41,9 @@ public:
      * @param y 鼠标位置y
      * @param x0 鼠标上一位置X
      * @param y0 鼠标上一位置y
+     * @param whl_del 滚轮位置变动
      */
-    void renderImg(int x, int y, int x0, int y0);
+    void renderImg(int x, int y, int x0, int y0, double whl_del);
 
 protected:
     /**
@@ -75,8 +76,11 @@ protected:
      * @param ev
      */
     void mouseReleaseEvent(QMouseEvent* ev);
-
-
+    /**
+     * @brief 处理鼠标滚轮事件
+     * @param ev
+     */
+    void wheelEvent(QWheelEvent* ev);
 
 private:
     const int W = 256;      /**< 图像宽度*/
@@ -87,6 +91,7 @@ private:
     INTER_STATUS m_status;          /**< 交互模式 */
     int mouse_curX, mouse_curY;     /**< 鼠标当前位置*/
     int mouse_posX, mouse_posY;     /**< 鼠标上一位置*/
+    double wheel_delta;
 
     QTime  fps_timer;                   /**< 测试用 */
     static unsigned int m_time;         /**< 时间变量，动画用*/
