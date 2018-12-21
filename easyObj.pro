@@ -1,6 +1,7 @@
 TEMPLATE = app
 QT += core gui widgets
-RC_ICONS = logo.ico
+
+RC_ICONS = ./res/logo.ico
 
 HEADERS += \
     core/color.h \
@@ -25,3 +26,6 @@ SOURCES += \
     core/sample.cpp
 
 
+
+QMAKE_CXXFLAGS += -fopenmp
+LIBS += -lgomp -lpthread

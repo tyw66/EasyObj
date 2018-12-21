@@ -27,7 +27,6 @@ void Mesh::project(const Vec3 &eye, double d)
     //遍历三角形  投影三角形到平面
     for(size_t i = 0; i < m_data.size(); ++i){
         m_buffer.push_back(m_data[i].projectTo2D(eye,d));
-        qDebug()<< "z-i:" << i << m_buffer[i].z_index;
     }
 }
 

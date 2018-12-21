@@ -1,5 +1,6 @@
 #include "viewer.h"
 #include <QDebug>
+#include <QMimeData>
 #include "../core/parser/objfileparser.h"
 
 unsigned int Viewer::m_time = 0;
@@ -15,7 +16,7 @@ Viewer::Viewer(QWidget *parent) : QWidget(parent)
     m_image = new QImage(W,H,QImage::Format_RGB32);
     m_scene = new Scene();
 
-    m_scene->m_mesh.makeCube(); //画立方体
+    m_scene->m_mesh.makeCube(); //程序加载时画立方体
 
 
     renderImg(W/2,H/2,W/2,H/2);
@@ -28,7 +29,7 @@ void Viewer::renderImg(int x, int y, int x0, int y0)
 
     m_scene->update((double)x/W, (double)y/H ,(double)x0/W, (double)y0/H);
 
-    //#pragma omp parallel for
+#pragma omp parallel for
     //遍历像素点
     for(int i = 0; i < H; ++i){
         for(int j = 0; j < W; ++j){
@@ -61,7 +62,7 @@ void Viewer::paintEvent(QPaintEvent *ev)
     p.drawImage(ev->rect(),*m_image);
 }
 
-#include <QMimeData>
+
 void Viewer::dragEnterEvent(QDragEnterEvent *ev)
 {
     //如果类型是obj才能接受拖动。否则不接受鼠标事件
