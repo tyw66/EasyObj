@@ -6,7 +6,7 @@ unsigned int Viewer::m_time = 0;
 Viewer::Viewer(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(Qt::WindowCloseButtonHint);
-//        setAttribute(Qt::WA_DeleteOnClose);
+    //        setAttribute(Qt::WA_DeleteOnClose);
     setMinimumSize(W,H);
     setMaximumSize(W,H);
     setMouseTracking(true);
@@ -18,17 +18,17 @@ Viewer::Viewer(QWidget *parent) : QWidget(parent)
     m_scene->m_mesh.makeCube(); //画立方体
 
 
-    renderImg(W/2,H/2);
+    renderImg(W/2,H/2,W/2,H/2);
 
 }
 
-void Viewer::renderImg(int x, int y)
+void Viewer::renderImg(int x, int y, int x0, int y0)
 {
     temp_timer.restart();
 
-    m_scene->update((double)x/W, (double)y/H);
+    m_scene->update((double)x/W, (double)y/H ,(double)x0/W, (double)y0/H);
 
-#pragma omp parallel for
+    //#pragma omp parallel for
     //遍历像素点
     for(int i = 0; i < H; ++i){
         for(int j = 0; j < W; ++j){
@@ -41,15 +41,18 @@ void Viewer::renderImg(int x, int y)
     update();
     //    m_time++;
 
-//    qDebug()<< temp_timer.elapsed();
+    //    qDebug()<< temp_timer.elapsed();
 }
 
 void Viewer::mouseMoveEvent(QMouseEvent *ev)
 {
-    mouse_posX = ev->x();
-    mouse_posY = ev->y();
+    mouse_curX = ev->x();
+    mouse_curY = ev->y();
 
-    renderImg(mouse_posX, mouse_posY);
+    renderImg(mouse_curX, mouse_curY,mouse_posX, mouse_posY);
+
+    mouse_posX = mouse_curX;
+    mouse_posY = mouse_curY;
 }
 
 void Viewer::paintEvent(QPaintEvent *ev)

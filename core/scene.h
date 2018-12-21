@@ -23,7 +23,7 @@ public:
      * @param x
      * @param y
      */
-    void update(double x, double y);
+    void update(double x, double y, double x0, double y0);
 
 
 };

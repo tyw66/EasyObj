@@ -13,20 +13,23 @@ bool Mesh::isContain(double x, double y)
 
 void Mesh::rotate(double xAngle, double yAngle, double zAngle)
 {
-    for(int i = 0; i < m_data.size(); ++i){
+//    m_buffer.clear();
+//    m_buffer.insert(m_buffer.begin(), m_data.begin(), m_data.end());
+    for(size_t i = 0; i < m_data.size(); ++i){
         m_data[i].rotate(xAngle, yAngle, zAngle);
     }
 }
 
+#include<QDebug>
 void Mesh::project(const Vec3 &eye, double d)
 {
     m_buffer.clear();
     //遍历三角形  投影三角形到平面
     for(size_t i = 0; i < m_data.size(); ++i){
         m_buffer.push_back(m_data[i].projectTo2D(eye,d));
+        qDebug()<< "z-i:" << i << m_buffer[i].z_index;
     }
 }
-
 
 Color Mesh::sample(double x, double y)
 {
@@ -43,6 +46,7 @@ Color Mesh::sample(double x, double y)
             if(m_buffer[i].z_index < index){
                 c = m_buffer[i].color_fill;
                 index = m_buffer[i].z_index;
+
             }
         }
     }
@@ -62,7 +66,6 @@ Color Mesh::sample(double x, double y)
 
     }
     //返回这个三角形的颜色值
-
     */
 
 }
@@ -96,21 +99,26 @@ void Mesh::makeCube()
     Triangle triangle11(vt1,vt4,vt8,Color(255,255,125));
     Triangle triangle12(vt1,vt5,vt8,Color(125,125,255));
 
-    m_data.push_back(triangle1);
-    m_data.push_back(triangle2);
+    m_data.push_back(triangle12);
     m_data.push_back(triangle3);
     m_data.push_back(triangle4);
     m_data.push_back(triangle5);
-    m_data.push_back(triangle6);
     m_data.push_back(triangle7);
     m_data.push_back(triangle8);
     m_data.push_back(triangle9);
+    m_data.push_back(triangle1);
+    m_data.push_back(triangle2);
+    m_data.push_back(triangle6);
     m_data.push_back(triangle10);
     m_data.push_back(triangle11);
-    m_data.push_back(triangle12);
 }
 
 void Mesh::clear()
 {
     m_data.clear();
+}
+
+void Mesh::reset()
+{
+
 }

@@ -29,8 +29,10 @@ public:
      * @brief 渲染图像
      * @param x 鼠标位置X
      * @param y 鼠标位置y
+     * @param x0 鼠标上一位置X
+     * @param y0 鼠标上一位置y
      */
-    void renderImg(int x = 0, int y = 0);
+    void renderImg(int x, int y, int x0, int y0);
 
 protected:
     /**
@@ -60,8 +62,8 @@ private:
     QImage* m_image;    /**< 图像数据*/
 
     static unsigned int m_time;         /**< 时间变量，动画用*/
-    int mouse_posX, mouse_posY;     /**< 鼠标位置*/
-
+    int mouse_curX, mouse_curY;     /**< 鼠标当前位置*/
+    int mouse_posX, mouse_posY;     /**< 鼠标上一位置*/
 
     QTime  temp_timer;          //测试用
 

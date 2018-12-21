@@ -69,6 +69,10 @@ public:
      * @brief clear
      */
     void clear();
+    /**
+     * @brief 重置变换
+     */
+    void reset();
 
 
 private:

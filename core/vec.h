@@ -8,7 +8,7 @@
 
 
 #include<math.h>
-
+#define PI 3.14159
 class Vec3{
 public:
     float x,y,z;
@@ -98,22 +98,19 @@ public:
     }
 
     ///绕坐标轴旋转
-    void rotateXAxis(double angle){
-        double rad = angle * 3.14/180.0;
-        double ty =cos(rad)*y+sin(rad)*z;
-        double tz = -sin(rad)*y+cos(rad)*z;
+    void rotateXAxis(double rad){
+        double ty = cos(rad) * y + sin(rad) * z;
+        double tz = -sin(rad) * y + cos(rad) * z;
         y = ty;
         z = tz;
     }
-    void rotateYAxis(double angle){
-        double rad = angle * 3.14/180.0;
-        double tx =cos(rad)*x-sin(rad)*z;
+    void rotateYAxis(double rad){
+        double tx = cos(rad)*x-sin(rad)*z;
         double tz = sin(rad)*x+cos(rad)*z;
         x = tx;
         z = tz;
     }
-    void rotateZAxis(double angle){
-        double rad = angle * 3.14/180.0;
+    void rotateZAxis(double rad){
         double tx = cos(rad)*x+sin(rad)*y;
         double ty = -sin(rad)*x+cos(rad)*y;
         x = tx;

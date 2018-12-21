@@ -1,5 +1,6 @@
 TEMPLATE = app
 QT += core gui widgets
+RC_ICONS = logo.ico
 
 HEADERS += \
     core/color.h \
@@ -22,3 +23,5 @@ SOURCES += \
     core/object/triangle.cpp \
     core/parser/objfileparser.cpp \
     core/sample.cpp
+
+

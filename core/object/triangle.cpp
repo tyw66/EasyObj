@@ -38,7 +38,7 @@ Triangle Triangle::projectTo2D(Vec3 eye, double d)
     vvb = -eye + vb;
     vvc = -eye + vc;
 
-    z_index =  fabs((vva.z + vvb.z + vvc.z)/3 - d);
+    double z_ind =  fabs((vva.z + vvb.z + vvc.z)/3 - d);
 
     Vec3 pva, pvb, pvc;
 
@@ -57,20 +57,24 @@ Triangle Triangle::projectTo2D(Vec3 eye, double d)
     pvc.y = vvc.y * f;
     pvc.z = d;
 
-    return  Triangle(pva, pvb, pvc, color_fill);
+
+
+    Triangle projTr(pva, pvb, pvc, color_fill);
+    projTr.z_index = z_ind;
+    return projTr;
 }
 
-void Triangle::rotate(double xAngle, double yAngle, double zAngle)
+void Triangle::rotate(double xRad, double yRad, double zRad)
 {
-    va.rotateXAxis(xAngle);
-    va.rotateYAxis(yAngle);
-    va.rotateZAxis(zAngle);
+    va.rotateXAxis(xRad);
+    va.rotateYAxis(yRad);
+    va.rotateZAxis(zRad);
 
-    vb.rotateXAxis(xAngle);
-    vb.rotateYAxis(yAngle);
-    vb.rotateZAxis(zAngle);
+    vb.rotateXAxis(xRad);
+    vb.rotateYAxis(yRad);
+    vb.rotateZAxis(zRad);
 
-    vc.rotateXAxis(xAngle);
-    vc.rotateYAxis(yAngle);
-    vc.rotateZAxis(zAngle);
+    vc.rotateXAxis(xRad);
+    vc.rotateYAxis(yRad);
+    vc.rotateZAxis(zRad);
 }
